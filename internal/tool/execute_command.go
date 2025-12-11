@@ -59,6 +59,7 @@ CRITICAL - PREVENTING COMMAND HANGS:
   - Commands with redirection: "some_server >/dev/null 2>&1 &"
   - Commands with timeout: "timeout 60 <command>"
 - ALWAYS ask yourself: "Will this command run in the background or keep stdout/stderr open?" If yes, add >/dev/null 2>&1
+- NEVER run osascript or AppleScript commands. ALAWAYS use click, type and similar tools instead.
 
 PARAMETERS:
 - machine_id (required): The VM to execute the command on.
