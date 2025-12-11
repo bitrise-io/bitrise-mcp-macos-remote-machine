@@ -1,0 +1,89 @@
+package bitrise
+
+import (
+	"bytes"
+	"context"
+	"encoding/json"
+	"errors"
+	"fmt"
+	"io"
+	"net/http"
+	"os"
+	"strings"
+)
+
+const userAgent = "bitrise-mcp-remote-sandbox/1.0"
+
+// APIBaseURL returns the base URL for the Bitrise API.
+// It can be overridden by setting the BITRISE_API_BASE_URL environment variable.
+func APIBaseURL() string {
+	if value := os.Getenv("BITRISE_API_BASE_URL"); value != "" {
+		return value
+	}
+	return "https://api.bitrise.io/v0.1"
+}
+
+type CallAPIParams struct {
+	Method  string
+	BaseURL string
+	Path    string
+	Params  map[string]string
+	Body    any
+}
+
+func CallAPI(ctx context.Context, p CallAPIParams) (string, error) {
+	apiKey, err := patFromCtx(ctx)
+	if err != nil {
+		return "", errors.New("set authorization header to your bitrise pat")
+	}
+
+	var reqBody io.Reader
+	if p.Body != nil {
+		a, err := json.Marshal(p.Body)
+		if err != nil {
+			return "", fmt.Errorf("marshal request body: %w", err)
+		}
+		reqBody = bytes.NewBuffer(a)
+	}
+
+	fullURL := p.BaseURL
+	if !strings.HasPrefix(p.Path, "/") {
+		fullURL += "/"
+	}
+	fullURL += p.Path
+
+	req, err := http.NewRequest(p.Method, fullURL, reqBody)
+	if err != nil {
+		return "", fmt.Errorf("create request: %w", err)
+	}
+	if p.Params != nil {
+		q := req.URL.Query()
+		for key, value := range p.Params {
+			q.Add(key, value)
+		}
+		req.URL.RawQuery = q.Encode()
+	}
+	req.Header.Set("User-Agent", userAgent)
+	req.Header.Set("Accept", "application/json")
+	req.Header.Set("Content-Type", "application/json")
+	req.Header.Set("Authorization", apiKey)
+
+	client := http.Client{}
+	res, err := client.Do(req)
+	if err != nil {
+		return "", fmt.Errorf("execute request: %w", err)
+	}
+	defer res.Body.Close()
+	if res.StatusCode >= 400 {
+		resBody, _ := io.ReadAll(res.Body)
+		return "", fmt.Errorf(
+			"unexpected status code %d; response body: %s",
+			res.StatusCode, resBody,
+		)
+	}
+	resBody, err := io.ReadAll(res.Body)
+	if err != nil {
+		return "", fmt.Errorf("read response body: %w", err)
+	}
+	return string(resBody), nil
+}

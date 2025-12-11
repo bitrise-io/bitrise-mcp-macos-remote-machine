@@ -1,0 +1,24 @@
+{
+  "servers": {
+    "bitrise-personal-machine": {
+      "type": "stdio",
+      "command": "go",
+      "args": [
+        "run",
+        "."
+      ],
+      "env": {
+        "BITRISE_TOKEN": "${input:bitrise-token}",
+        "BITRISE_API_BASE_URL": "https://api.bitrise.io/v0.1"
+      }
+    }
+  },
+  "inputs": [
+    {
+      "id": "bitrise-token",
+      "type": "promptString",
+      "description": "Bitrise Personal Access Token",
+      "password": true
+    }
+  ]
+}
