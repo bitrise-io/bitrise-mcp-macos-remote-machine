@@ -42,7 +42,7 @@ Add this to `~/.gemini/settings.json`:
             "command": "go",
             "args": [
                 "run",
-                "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"
+                "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"
             ],
             "env": {
                 "BITRISE_TOKEN": "$BITRISE_PAT"

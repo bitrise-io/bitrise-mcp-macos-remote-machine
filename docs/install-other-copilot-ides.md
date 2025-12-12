@@ -27,7 +27,7 @@ Requires Visual Studio 2022 version 17.14.9 or later.
     "bitrise-remote-machine": {
       "type": "stdio",
       "command": "go",
-      "args": ["run", "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"],
+      "args": ["run", "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"],
       "env": {
         "BITRISE_TOKEN": "YOUR_BITRISE_PAT"
       }
@@ -57,7 +57,7 @@ Agent mode and MCP support available in public preview across IntelliJ IDEA, PyC
       "command": "go",
       "args": [
         "run",
-        "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"
+        "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"
       ],
       "env": {
         "BITRISE_TOKEN": "YOUR_BITRISE_PAT"
@@ -86,7 +86,7 @@ Agent mode and MCP support now available in public preview for Xcode.
       "command": "go",
       "args": [
         "run",
-        "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"
+        "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"
       ],
       "env": {
         "BITRISE_TOKEN": "YOUR_BITRISE_PAT"
@@ -114,7 +114,7 @@ MCP support available with Eclipse 2024-03+ and latest version of the GitHub Cop
       "command": "go",
       "args": [
         "run",
-        "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"
+        "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"
       ],
       "env": {
         "BITRISE_TOKEN": "YOUR_BITRISE_PAT",

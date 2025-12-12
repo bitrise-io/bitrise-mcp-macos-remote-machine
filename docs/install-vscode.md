@@ -21,7 +21,7 @@ Follow [VS Code | Add an MCP server](https://code.visualstudio.com/docs/copilot/
       "command": "go",
       "args": [
         "run",
-        "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"
+        "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"
       ],
       "env": {
         "BITRISE_TOKEN": "${input:bitrise-token}"

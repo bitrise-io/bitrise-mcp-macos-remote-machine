@@ -1,4 +1,4 @@
-module github.com/bitrise-io/bitrise-mcp-remote-sandbox
+module github.com/bitrise-io/bitrise-mcp-macos-remote-machine
 
 go 1.25.0
 

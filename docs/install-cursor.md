@@ -30,7 +30,7 @@ The Bitrise Remote Machine MCP server runs locally via Go.
       "command": "go",
       "args": [
         "run",
-        "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"
+        "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"
       ],
       "env": {
         "BITRISE_TOKEN": "YOUR_BITRISE_PAT"

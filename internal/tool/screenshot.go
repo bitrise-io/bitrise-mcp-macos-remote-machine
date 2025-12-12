@@ -11,7 +11,7 @@ import (
 	"path/filepath"
 	"time"
 
-	"github.com/bitrise-io/bitrise-mcp-remote-sandbox/internal/bitrise"
+	"github.com/bitrise-io/bitrise-mcp-macos-remote-machine/internal/bitrise"
 	"github.com/mark3labs/mcp-go/mcp"
 )
 

@@ -34,12 +34,12 @@ echo -e ".env\n.mcp.json" >> .gitignore
 
 1. Run the following command in the Claude Code CLI:
 ```bash
-claude mcp add bitrise-remote-machine -e BITRISE_TOKEN=YOUR_BITRISE_PAT -- go run github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest
+claude mcp add bitrise-remote-machine -e BITRISE_TOKEN=YOUR_BITRISE_PAT -- go run github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest
 ```
 
 With an environment variable:
 ```bash
-claude mcp add bitrise-remote-machine -e BITRISE_TOKEN=$(grep BITRISE_PAT .env | cut -d '=' -f2) -- go run github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest
+claude mcp add bitrise-remote-machine -e BITRISE_TOKEN=$(grep BITRISE_PAT .env | cut -d '=' -f2) -- go run github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest
 ```
 
 2. Restart Claude Code
@@ -80,7 +80,7 @@ Add this codeblock to your `claude_desktop_config.json`:
       "command": "go",
       "args": [
         "run",
-        "github.com/bitrise-io/bitrise-mcp-remote-sandbox@latest"
+        "github.com/bitrise-io/bitrise-mcp-macos-remote-machine@latest"
       ],
       "env": {
         "BITRISE_TOKEN": "YOUR_BITRISE_PAT",
