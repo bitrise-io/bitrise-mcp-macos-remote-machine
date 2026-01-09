@@ -4,7 +4,7 @@ MCP Server for Bitrise Remote Machines, enabling AI assistants to create and man
 
 ## Features
 
-- **VM Lifecycle Management**: Create, list, and delete remote macOS virtual machines.
+- **VM Lifecycle Management**: Create, list, start, stop, and delete remote macOS virtual machines. Users can have up to 5 machines with persistent disk state.
 - **Command Execution**: Run shell commands on the VM (Xcode, Git, Homebrew, etc.).
 - **File Transfer**: Upload local files/folders to the VM and download build artifacts.
 - **GUI Automation**: Interact with the VM's graphical interface via screenshots, mouse clicks, keyboard input, and scrolling.
@@ -25,9 +25,12 @@ MCP Server for Bitrise Remote Machines, enabling AI assistants to create and man
 
 | Tool | Description |
 |------|-------------|
-| `bitrise_remote_machine_list` | List all running VMs |
-| `bitrise_remote_machine_create` | Create a new macOS VM for remote execution |
-| `bitrise_remote_machine_delete` | Terminate and delete a VM |
+| `bitrise_remote_machine_list` | List all VMs with their status and description |
+| `bitrise_remote_machine_create` | Create a new macOS VM (with optional description) |
+| `bitrise_remote_machine_start` | Start a terminated or failed VM |
+| `bitrise_remote_machine_stop` | Stop a running VM (preserves disk state) |
+| `bitrise_remote_machine_delete` | Permanently delete a VM |
+| `bitrise_remote_machine_update_description` | Update a VM's description |
 
 ### Command & File Operations
 
@@ -57,10 +60,13 @@ MCP Server for Bitrise Remote Machines, enabling AI assistants to create and man
 
 ### VM Management
 
-- **One VM at a time**: Users can only have one remote machine running
-- **Auto-expiration**: VMs automatically terminate after 1 hour if not manually deleted
-- **Boot time**: First command after creation may take longer while VM boots
-- **Always check first**: Call `bitrise_remote_machine_list` before creating a new VM to reuse existing machines
+- **Multi-machine support**: Users can have up to 5 machines total (in any state)
+- **One running at a time**: Only one machine can be in running or pending state
+- **Persistent disk state**: Stopped (terminated) machines preserve their disk state and can be restarted
+- **Auto-expiration**: VMs automatically terminate after 1 hour if not manually stopped
+- **Boot time**: Creating or starting a VM takes 30-60 seconds
+- **Always check first**: Call `bitrise_remote_machine_list` before creating to reuse existing machines
+- **Use descriptions**: Always provide descriptions when creating machines to identify them later
 
 ### Command Execution
 
