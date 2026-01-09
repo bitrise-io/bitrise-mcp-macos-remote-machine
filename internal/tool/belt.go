@@ -13,7 +13,10 @@ func NewBelt() *Belt {
 	var toolList = []bitrise.Tool{
 		ListRemoteMachines,
 		CreateRemoteMachine,
+		StartRemoteMachine,
+		StopRemoteMachine,
 		DeleteRemoteMachine,
+		UpdateDescription,
 		ExecuteCommand,
 		Upload,
 		Download,
