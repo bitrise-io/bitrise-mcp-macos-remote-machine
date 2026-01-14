@@ -2,6 +2,7 @@ package tool
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/bitrise-io/bitrise-mcp-macos-remote-machine/internal/bitrise"
@@ -51,10 +52,7 @@ RETURNS: Empty response on success. The machine will transition to 'terminated' 
 		res, err := bitrise.CallAPI(ctx, bitrise.CallAPIParams{
 			Method:  http.MethodPost,
 			BaseURL: bitrise.APIBaseURL(),
-			Path:    "/platform/me/machines/stop",
-			Body: map[string]any{
-				"machineId": machineID,
-			},
+			Path:    fmt.Sprintf("/platform/me/machines/%s/stop", machineID),
 		})
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("failed to stop remote machine", err), nil

@@ -2,6 +2,7 @@ package tool
 
 import (
 	"context"
+	"fmt"
 	"net/http"
 
 	"github.com/bitrise-io/bitrise-mcp-macos-remote-machine/internal/bitrise"
@@ -35,11 +36,17 @@ MACHINE STATES THAT CAN BE STARTED:
 
 REQUIRED PARAMETERS:
 - machine_id: The ID of the machine to start (from bitrise_remote_machine_list).
+- description: A brief description of the machine's purpose. Always provide this parameter when
+  the machine's purpose is changed compared to its current description.
 
 RETURNS: Empty response on success. The machine will transition to 'pending' then 'running'.`,
 		),
 		mcp.WithString("machine_id",
 			mcp.Description("The unique identifier of the remote machine to start"),
+			mcp.Required(),
+		),
+		mcp.WithString("description",
+			mcp.Description("The new description for the machine"),
 			mcp.Required(),
 		),
 	),
@@ -49,13 +56,17 @@ RETURNS: Empty response on success. The machine will transition to 'pending' the
 			return mcp.NewToolResultError(err.Error()), nil
 		}
 
+		body := map[string]any{}
+		description := request.GetString("description", "")
+		if description != "" {
+			body["description"] = description
+		}
+
 		res, err := bitrise.CallAPI(ctx, bitrise.CallAPIParams{
 			Method:  http.MethodPost,
 			BaseURL: bitrise.APIBaseURL(),
-			Path:    "/platform/me/machines/start",
-			Body: map[string]any{
-				"machineId": machineID,
-			},
+			Path:    fmt.Sprintf("/platform/me/machines/%s/start", machineID),
+			Body:    body,
 		})
 		if err != nil {
 			return mcp.NewToolResultErrorFromErr("failed to start remote machine", err), nil
